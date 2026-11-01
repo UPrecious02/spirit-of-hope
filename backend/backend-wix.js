@@ -1,5 +1,6 @@
 import wixData from 'wix-data';
 import { fetch } from 'wix-fetch';
+import { getSecret } from 'wix-secrets-backend';
 
 export async function saveAssessment(assessmentData) {
     try {
@@ -22,12 +23,14 @@ export async function saveAssessment(assessmentData) {
             'triumphbusiness08@gmail.com'
         ];
 
-        for (const emailAddress of recipients) {
-            const response = await fetch('https://a.klaviyo.com/api/events/', {
+        const klaviyoKey = await getSecret('klaviyo_api_key');
+
+        for (const emailAddress of recipients) { 
+                const response = await fetch('https://a.klaviyo.com/api/events/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Klaviyo-API-Key pk_VgvH6P_d7edbd7c818be06667b2f22ee512ea58fd`,
+                    'Authorization': `Klaviyo-API-Key ${klaviyoKey}`,
                     'revision': '2024-02-15'
                 },
                 body: JSON.stringify({
