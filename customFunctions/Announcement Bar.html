@@ -1,0 +1,76 @@
+<style>
+  #SITE_HEADER {
+    margin-top: 41px !important;
+  }
+  @media (max-width: 480px) {
+    #SITE_HEADER {
+      margin-top: 60px !important;
+    }
+  }
+  #soh-announcement-bar {
+    width: 100%;
+    background: linear-gradient(135deg, #1a6b4a, #2a9d6f);
+    padding: 10px 20px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  #soh-announcement-bar a {
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.2px;
+    max-width: 100%;
+  }
+  #soh-announcement-bar a span.soh-cta {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  #soh-announcement-bar a:hover span.soh-cta {
+    background: rgba(255,255,255,0.35);
+  }
+
+  
+  @media (max-width: 480px) {
+    #soh-announcement-bar {
+      padding: 8px 16px;
+    }
+    #soh-announcement-bar a {
+      font-size: 12px;
+      flex-direction: column;
+      gap: 4px;
+    }
+    #soh-announcement-bar a .soh-main-text {
+      display: block;
+    }
+    #soh-announcement-bar a span.soh-cta {
+      font-size: 11x;
+      white-space: nowrap;
+    }
+  }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div id="soh-announcement-bar">
+  <a href="https://www.spiritofhopes.com/survey-assessment">
+    <span class="soh-main-text">🏠 Is your loved one safe at home alone?</span>
+    <span class="soh-cta">Take the Free Assessment →</span>
+  </a>
+</div>

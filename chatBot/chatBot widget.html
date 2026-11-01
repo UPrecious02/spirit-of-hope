@@ -1,0 +1,591 @@
+<style>
+    :root {
+        --soh-green: #00544A;
+        --soh-green-dark: #24634799;
+        --soh-ink: #1F2933;
+        --soh-muted: #6B7280;
+        --soh-line: #E4E7EB;
+        --soh-bg: #FFFFFF;
+        --soh-user-bubble: #EFF4F1;
+        --soh-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif
+    }
+
+    #soh-chat-root,
+    #soh-chat-root * {
+        box-sizing: border-box
+    }
+
+    #soh-launcher {
+        position: fixed;
+        right: clamp(14px, 3vw, 24px);
+        bottom: clamp(14px, 3vw, 24px);
+        z-index: 99998;
+        width: clamp(54px, 13vw, 62px);
+        height: clamp(54px, 13vw, 62px);
+        border-radius: 50%;
+        border: none;
+        background: var(--soh-green);
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 22px rgba(0, 0, 0, .22);
+        transition: transform .18s ease, box-shadow .18s ease;
+        padding: 0;
+    }
+
+    #soh-launcher:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 26px rgba(0, 0, 0, .26)
+    }
+
+    #soh-launcher:focus-visible {
+        outline: 3px solid #fff;
+        outline-offset: 3px
+    }
+
+    #soh-launcher {
+        background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M12%203C6.48%203%202%206.86%202%2011.62c0%202.7%201.44%205.1%203.7%206.68v3.2a.6.6%200%200%200%20.9.52l3.2-1.83c.7.12%201.44.19%202.2.19%205.52%200%2010-3.86%2010-8.62S17.52%203%2012%203zM8%2013.1a1.4%201.4%200%201%201%200-2.8%201.4%201.4%200%200%201%200%202.8zm4%200a1.4%201.4%200%201%201%200-2.8%201.4%201.4%200%200%201%200%202.8zm4%200a1.4%201.4%200%201%201%200-2.8%201.4%201.4%200%200%201%200%202.8z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
+        background-size: 27px 27px !important
+    }
+
+    #soh-launcher.is-open {
+        background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M18.3%205.71a1%201%200%200%200-1.41%200L12%2010.59%207.11%205.7A1%201%200%200%200%205.7%207.11L10.59%2012%205.7%2016.89a1%201%200%201%200%201.41%201.41L12%2013.41l4.89%204.89a1%201%200%200%200%201.41-1.41L13.41%2012l4.89-4.89a1%201%200%200%200%200-1.4z%22%2F%3E%3C%2Fsvg%3E') !important;
+        background-size: 24px 24px !important
+    }
+
+    #soh-launcher::after {
+        content: '';
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #E5484D;
+        border: 2px solid #fff;
+        opacity: 0;
+        transition: opacity .2s
+    }
+
+    #soh-launcher.has-badge::after {
+        opacity: 1
+    }
+
+    #soh-launcher.is-open::after {
+        opacity: 0 !important
+    }
+
+    #soh-panel {
+        position: fixed;
+        right: clamp(14px, 3vw, 24px);
+        bottom: calc(clamp(54px, 13vw, 62px) + clamp(24px, 5vw, 36px));
+        z-index: 99999;
+        width: min(380px, calc(100% - 28px));
+        max-width: calc(100vw - 28px);
+        height: min(550px, calc(100vh - 140px));
+        background: var(--soh-bg);
+        border-radius: 16px;
+        box-shadow: 0 16px 50px rgba(0, 0, 0, .24);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        font-family: var(--soh-font);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(12px) scale(.98);
+        transform-origin: bottom right;
+        transition: opacity .2s ease, transform .2s ease, visibility .2s
+    }
+
+    #soh-panel.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1)
+    }
+
+    @media (max-width:600px) {
+        #soh-panel {
+            right: 0;
+            bottom: 0;
+            left: 0;
+            top: 0;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: none;
+            border-radius: 0;
+            transform: translateY(100%)
+        }
+
+        #soh-panel.is-open {
+            transform: translateY(0)
+        }
+
+        #soh-launcher.is-open {
+            display: none
+        }
+    }
+
+    #soh-head {
+        background: var(--soh-green);
+        color: #fff;
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        flex-shrink: 0
+    }
+
+    #soh-head .soh-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 15px;
+        flex-shrink: 0
+    }
+
+    #soh-head .soh-title {
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 1.25
+    }
+
+    #soh-head .soh-sub {
+        font-size: 12px;
+        opacity: .85;
+        line-height: 1.3;
+        margin-top: 1px
+    }
+
+    #soh-head .soh-dismiss {
+        margin-left: auto;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+        background-color: transparent;
+        background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M18.3%205.71a1%201%200%200%200-1.41%200L12%2010.59%207.11%205.7A1%201%200%200%200%205.7%207.11L10.59%2012%205.7%2016.89a1%201%200%201%200%201.41%201.41L12%2013.41l4.89%204.89a1%201%200%200%200%201.41-1.41L13.41%2012l4.89-4.89a1%201%200%200%200%200-1.4z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
+        background-size: 19px 19px !important;
+        opacity: .92;
+        padding: 0
+    }
+
+    #soh-head .soh-dismiss:hover {
+        background-color: rgba(255, 255, 255, .18)
+    }
+
+    #soh-log {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px 14px 8px;
+        background: #FAFBFA;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        -webkit-overflow-scrolling: touch
+    }
+
+    .soh-msg {
+        max-width: 84%;
+        padding: 10px 13px;
+        border-radius: 14px;
+        font-size: 14.5px;
+        line-height: 1.5;
+        color: var(--soh-ink);
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+        animation: sohIn .22s ease
+    }
+
+    @keyframes sohIn {
+        from {
+            opacity: 0;
+            transform: translateY(6px)
+        }
+
+        to {
+            opacity: 1;
+            transform: none
+        }
+    }
+
+    .soh-msg.bot {
+        align-self: flex-start;
+        background: #fff;
+        border: 1px solid var(--soh-line);
+        border-bottom-left-radius: 5px
+    }
+
+    .soh-msg.user {
+        align-self: flex-end;
+        background: var(--soh-user-bubble);
+        border-bottom-right-radius: 5px
+    }
+
+    .soh-msg.err {
+        align-self: flex-start;
+        background: #FEF2F2;
+        border: 1px solid #FCA5A5;
+        color: #7F1D1D;
+        border-bottom-left-radius: 5px
+    }
+
+    .soh-msg p {
+        margin: 0 0 8px
+    }
+
+    .soh-msg p:last-child {
+        margin-bottom: 0
+    }
+
+    .soh-msg ul {
+        margin: 6px 0;
+        padding-left: 18px
+    }
+
+    .soh-msg li {
+        margin-bottom: 4px
+    }
+
+    .soh-msg a {
+        color: var(--soh-green);
+        font-weight: 600
+    }
+
+    .soh-msg strong {
+        font-weight: 650
+    }
+
+    .soh-typing {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        padding: 13px
+    }
+
+    .soh-typing span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--soh-muted);
+        opacity: .45;
+        animation: sohBlink 1.3s infinite
+    }
+
+    .soh-typing span:nth-child(2) {
+        animation-delay: .18s
+    }
+
+    .soh-typing span:nth-child(3) {
+        animation-delay: .36s
+    }
+
+    @keyframes sohBlink {
+
+        0%,
+        60%,
+        100% {
+            opacity: .25;
+            transform: translateY(0)
+        }
+
+        30% {
+            opacity: .9;
+            transform: translateY(-3px)
+        }
+    }
+
+    #soh-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        padding: 0 14px 10px;
+        background: #FAFBFA;
+        flex-shrink: 0
+    }
+
+    .soh-chip {
+        font-family: var(--soh-font);
+        font-size: 12.5px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--soh-green);
+        color: var(--soh-green);
+        background: #fff;
+        cursor: pointer;
+        transition: background .15s, color .15s
+    }
+
+    .soh-chip:hover {
+        background: var(--soh-green);
+        color: #fff
+    }
+
+    #soh-foot {
+        border-top: 1px solid var(--soh-line);
+        padding: 10px 12px;
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+        background: #fff;
+        flex-shrink: 0;
+        padding-bottom: max(10px, env(safe-area-inset-bottom))
+    }
+
+    #soh-input {
+        flex: 1;
+        font-family: var(--soh-font);
+        font-size: 16px;
+        line-height: 1.4;
+        padding: 9px 12px;
+        border: 1px solid var(--soh-line);
+        border-radius: 20px;
+        resize: none;
+        max-height: 96px;
+        outline: none;
+        color: var(--soh-ink)
+    }
+
+    #soh-input:focus {
+        border-color: var(--soh-green)
+    }
+
+    #soh-send {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: var(--soh-green);
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: opacity .15s
+    }
+
+    #soh-send:disabled {
+        opacity: .4;
+        cursor: default
+    }
+
+    #soh-send {
+        background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M2.4%2020.4%2022%2012%202.4%203.6%202.39%209.9%2016.4%2012%202.39%2014.1z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat !important;
+        background-position: 47% center !important;
+        background-size: 18px 18px !important
+    }
+
+    #soh-legal {
+        font-size: 10.5px;
+        color: var(--soh-muted);
+        text-align: center;
+        padding: 0 12px 8px;
+        background: #fff;
+        line-height: 1.4;
+        flex-shrink: 0
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+
+        #soh-panel,
+        #soh-launcher,
+        .soh-msg {
+            transition: none !important;
+            animation: none !important
+        }
+    }
+</style>
+<div id="soh-chat-root"><button id="soh-launcher" aria-label="Open chat" aria-expanded="false"></button>
+    <div id="soh-panel" role="dialog" aria-label="Chat with Ask Hope" aria-modal="false">
+        <div id="soh-head">
+            <div class="soh-avatar">AH</div>
+            <div>
+                <div class="soh-title">Ask Hope</div>
+                <div class="soh-sub">We usually reply instantly</div>
+            </div><button class="soh-dismiss" aria-label="Close chat"></button>
+        </div>
+        <div id="soh-log" role="log" aria-live="polite"></div>
+        <div id="soh-chips"></div>
+        <div id="soh-foot"><textarea id="soh-input" rows="1" data-gramm="false" data-gramm_editor="false"
+                data-enable-grammarly="false" placeholder="Ask us anything…"
+                aria-label="Type your message"></textarea><button id="soh-send" aria-label="Send message"></button>
+        </div>
+        <div id="soh-legal">Automated assistant · For urgent needs call <a href="tel:2404233099"
+                style="color:inherit;font-weight:600;">240-423-3099</a></div>
+    </div>
+</div>
+<script>
+    (function () {
+        'use strict';
+        var ENDPOINT = '/_functions/chat';
+        var PHONE = '240-423-3099';
+        var GREETING = "Hi there! I'm Ask Hope, Spirit of Hope's virtual assistant. I can answer questions about our home care services. What can I help you with?";
+        var CHIPS = ['What services do you offer?', 'Which areas do you serve?', 'How do I get started?'];
+        var launcher = document.getElementById('soh-launcher');
+        var panel = document.getElementById('soh-panel');
+        var dismiss = panel.querySelector('.soh-dismiss');
+        var log = document.getElementById('soh-log');
+        var chipsBox = document.getElementById('soh-chips');
+        var input = document.getElementById('soh-input');
+        var sendBtn = document.getElementById('soh-send');
+        var busy = false;
+        var started = false;
+        var memSession = null;
+        function sessionId() {
+            try {
+                var v = localStorage.getItem('soh_chat_session');
+                if (!v) {
+                    v = 'web_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+                    localStorage.setItem('soh_chat_session', v);
+                }
+                return v;
+            } catch (e) {
+                if (!memSession) memSession = 'web_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+                return memSession;
+            }
+        }
+        function esc(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+        function mdToHtml(raw) {
+            var text = esc(String(raw || '').trim());
+            text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+            text = text.replace(/(^|[\s(])((?:https?:\/\/)[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
+            text = text.replace(/\b(\d{3})-(\d{3})-(\d{4})\b/g, '<a href="tel:$1$2$3">$1-$2-$3</a>');
+            text = text.replace(/\b([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})\b/g, '<a href="mailto:$1">$1</a>');
+            text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>');
+            var lines = text.split(/\n/);
+            var out = '', buf = [], listBuf = [];
+            function flushPara() {
+                if (buf.length) { out += '<p>' + buf.join('<br>') + '</p>'; buf = []; }
+            }
+            function flushList() {
+                if (listBuf.length) {
+                    out += '<ul>' + listBuf.map(function (li) { return '<li>' + li + '</li>'; }).join('') + '</ul>';
+                    listBuf = [];
+                }
+            }
+            lines.forEach(function (line) {
+                var t = line.trim();
+                var m = t.match(/^[-*•]\s+(.*)$/) || t.match(/^\d+[.)]\s+(.*)$/);
+                if (m) { flushPara(); listBuf.push(m[1]); }
+                else if (!t) { flushList(); flushPara(); }
+                else { flushList(); buf.push(t); }
+            });
+            flushList(); flushPara();
+            return out || '<p></p>';
+        }
+        function bubble(kind, html) {
+            var el = document.createElement('div');
+            el.className = 'soh-msg ' + kind;
+            el.innerHTML = html;
+            log.appendChild(el);
+            log.scrollTop = log.scrollHeight;
+            return el;
+        }
+        function typing() {
+            var el = document.createElement('div');
+            el.className = 'soh-msg bot';
+            el.innerHTML = '<div class="soh-typing"><span></span><span></span><span></span></div>';
+            log.appendChild(el);
+            log.scrollTop = log.scrollHeight;
+            return el;
+        }
+        function renderChips() {
+            chipsBox.innerHTML = '';
+            CHIPS.forEach(function (label) {
+                var b = document.createElement('button');
+                b.className = 'soh-chip';
+                b.type = 'button';
+                b.textContent = label;
+                b.addEventListener('click', function () { send(label); });
+                chipsBox.appendChild(b);
+            });
+        }
+        function clearChips() { chipsBox.innerHTML = ''; }
+        function send(text) {
+            var msg = (text != null ? text : input.value).trim();
+            if (!msg || busy) return;
+            busy = true;
+            sendBtn.disabled = true;
+            clearChips();
+            bubble('user', '<p>' + esc(msg) + '</p>');
+            input.value = '';
+            input.style.height = 'auto';
+            var dots = typing();
+            fetch(ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sessionId: sessionId(), message: msg })
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    dots.remove();
+                    if (data && data.reply) bubble('bot', mdToHtml(data.reply));
+                    else throw new Error('empty');
+                })
+                .catch(function () {
+                    dots.remove();
+                    bubble('err', '<p>Sorry — I had trouble connecting just now. Please try again, or call us at <a href="tel:2404233099">' + PHONE + '</a>.</p>');
+                })
+                .then(function () {
+                    busy = false;
+                    sendBtn.disabled = false;
+                    input.focus();
+                });
+        }
+        function open() {
+            panel.classList.add('is-open');
+            launcher.classList.add('is-open');
+            launcher.classList.remove('has-badge');
+            launcher.setAttribute('aria-expanded', 'true');
+            launcher.setAttribute('aria-label', 'Close chat');
+            if (!started) {
+                started = true;
+                bubble('bot', mdToHtml(GREETING));
+                renderChips();
+            }
+            if (window.innerWidth > 600) setTimeout(function () { input.focus(); }, 220);
+        }
+        function close() {
+            panel.classList.remove('is-open');
+            launcher.classList.remove('is-open');
+            launcher.setAttribute('aria-expanded', 'false');
+            launcher.setAttribute('aria-label', 'Open chat');
+        }
+        launcher.addEventListener('click', function () {
+            panel.classList.contains('is-open') ? close() : open();
+        });
+        dismiss.addEventListener('click', close);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && panel.classList.contains('is-open')) close();
+        });
+        sendBtn.addEventListener('click', function () { send(); });
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+        });
+        input.addEventListener('input', function () {
+            input.style.height = 'auto';
+            input.style.height = Math.min(input.scrollHeight, 96) + 'px';
+        });
+        setTimeout(function () {
+            if (!panel.classList.contains('is-open') && !started) launcher.classList.add('has-badge');
+        }, 12000);
+    })();
+</script>

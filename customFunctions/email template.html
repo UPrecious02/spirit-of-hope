@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 0px auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .header { background: linear-gradient(135deg, #1e3c72, #2a5298); padding : 16px; text-align: center; }
+    .header h1 { color: #ffffff; margin: 0; font-size: 18px !important; line-height: 1.4; }
+    .body { padding: 16px; }
+    .body p { color: #444444; font-size: 12px; line-height: 1.5; margin: 0 0 10px; }
+    .field { margin-bottom: 10px; font-size: 12px; color: #444444; }
+    .field span { font-weight: bold; color: #1e3c72; }
+    .divider { border: none; border-top: 1px solid #eeeeee; margin: 14px 0; }
+    .footer { background: #f4f4f4; text-align: center; padding: 12px; font-size: 11px; color: #999999; }
+
+    @media only screen and (max-width: 480px) {
+      .container { margin: 0; border-radius: 0; }
+      .header h1 { font-size: 16px !important; }
+      .body { padding: 14px; }
+      .field { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🏠 New Home Safety Assessment Submitted</h1>
+    </div>
+    <div class="body">
+      <p>A new assessment has just been completed. Here are the details:</p>
+
+      <div class="field"><span>Name:</span> {{ event.name }}</div>
+      <div class="field"><span>Email:</span> {{ event.email }}</div>
+      <div class="field"><span>Phone:</span> {{ event.phone }}</div>
+      <div class="field"><span>Relationship to Patient:</span> {{ event.relationship }}</div>
+
+      <hr class="divider">
+
+      <div class="field"><span>Score:</span> {{ event.score }}</div>
+      <div class="field"><span>Risk Level:</span> {{ event.risk_level }}</div>
+      <div class="field"><span>Submitted On:</span> {{ event.submitted_date }}</div>
+    </div>
+    <div class="footer">
+      Spirit of Hope Agency &mdash; Assessment Notification
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div style="
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+">
+    <!-- Blue wave effect overlay -->
+    <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+            radial-gradient(circle at 40% 20%, rgba(255,255,255,0.05) 0%, transparent 40%);
+        pointer-events: none;
+    "></div>
+    
+    <blockquote style="
+        font-family: 'Inter Tight', sans-serif;
+        font-size: clamp(18px, 4vw, 24px);
+        font-style: italic;
+        color: #ffffff;
+        margin: 0 auto 30px;
+        max-width: 700px;
+        line-height: 1.6;
+        font-weight: 500;
+        position: relative;
+        z-index: 1;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        padding: 0 10px;
+    ">
+        "Caregiving has three dimensions: the house, the health, and the heart. When one falls apart, all three suffer."
+    </blockquote>
+    
+    <div style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 1;
+    ">
+        <div style="text-align: center;">
+            <img src="https://static.wixstatic.com/media/4390f8_69632a22ad2b49f68726c397666eb32c~mv2.png" alt="Home" style="
+                width: clamp(60px, 15vw, 80px);
+                height: clamp(60px, 15vw, 80px);
+                object-fit: cover;
+                border-radius: 50%;
+                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            ">
+        </div>
+        
+        <div style="text-align: center;">
+            <img src="https://static.wixstatic.com/media/4390f8_602685a8425d4786b9ec3db75d02c858~mv2.png" alt="Health" style="
+                width: clamp(60px, 15vw, 80px);
+                height: clamp(60px, 15vw, 80px);
+                object-fit: cover;
+                border-radius: 50%;
+                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            ">
+        </div>
+        
+        <div style="text-align: center;">
+            <img src="https://static.wixstatic.com/media/4390f8_0c21e6fb1b6e41559b4cfab9783837dd~mv2.png" alt="Heart" style="
+                width: clamp(60px, 15vw, 80px);
+                height: clamp(60px, 15vw, 80px);
+                object-fit: cover;
+                border-radius: 50%;
+                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            ">
+        </div>
+    </div>
+</div>
+
+
+
+<!--Link html block to Klaviyo popup form-->
+
+
+<script>
+  window.addEventListener('message', function(event) {
+    if (event.data === 'openKlaviyoForm') {
+      window._klOnsite = window._klOnsite || [];
+      window._klOnsite.push(['openForm', 'VjUd9v']);
+    }
+  });
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<a href="#" onclick="window.parent.postMessage('openKlaviyoForm', '*'); return false;" style="font-family: 'Montserrat', sans-serif; font-weight: 600; color: inherit; text-decoration: none;">
+  Learn about Memory Café →
+</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- FAQ Section -->
+
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+.faq-container {
+    max-width: 800px;
+    margin: 20px auto;
+    font-family: 'Inter Tight', sans-serif;
+    padding: 0 15px;
+}
+
+.faq-item {
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.faq-question {
+    background-color: #f5f5f5;
+    padding: 18px 15px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: clamp(13px, 3.5vw, 16px); /* Smaller on mobile */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    gap: 10px;
+    font-family: 'Inter Tight', sans-serif;
+}
+
+.faq-question:hover {
+    background-color: #e8e8e8;
+}
+
+.faq-question::after {
+    content: '+';
+    font-size: 24px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    min-width: 24px;
+}
+
+.faq-question.active::after {
+    content: '−';
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    background-color: #ffffff;
+    padding: 0 15px;
+}
+
+.faq-answer.active {
+    max-height: 600px;
+    padding: 18px 15px;
+}
+
+.faq-answer p {
+    margin: 0;
+    line-height: 1.6;
+    color: #333;
+    font-size: clamp(13px, 3vw, 15px); /* Smaller on mobile */
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+}
+
+.faq-answer a {
+    color: #0066cc;
+    text-decoration: underline;
+    word-break: break-word;
+    font-family: 'Inter Tight', sans-serif;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 600px) {
+    .faq-container {
+        margin: 15px auto;
+        padding: 0 10px;
+    }
+    
+    .faq-question {
+        padding: 15px 12px;
+        font-size: 13px; /* Fixed smaller size on mobile */
+    }
+    
+    .faq-answer.active {
+        padding: 15px 12px;
+    }
+    
+    .faq-answer p {
+        font-size: 13px; /* Fixed smaller size on mobile */
+    }
+}
+</style>
+
+<div class="faq-container">
+    <div class="faq-item">
+        <div class="faq-question">
+            At what point should I consider professional home care?
+        </div>
+        <div class="faq-answer">
+            <p>When the physical demands are affecting your own health, when your loved one's needs exceed what you can safely manage alone, or when loneliness and isolation are becoming a real concern. Professional care does not have to be full-time; even a few hours a week can make a significant difference to both of you. <a href="tel:240-423-3099">Speak to an expert caregiver today</a>.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            What is the difference between personal care and companion care?
+        </div>
+        <div class="faq-answer">
+            <p>Personal care covers the physical daily tasks such as bathing, grooming, dressing, meal preparation, and medication reminders.<br><br>
+
+ Companion care covers the emotional and social side, conversation, activities, and the consistent presence that prevents loneliness. A good care plan includes both.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            How often should I review the home safety setup?
+        </div>
+        <div class="faq-answer">
+            <p>Every six months as a baseline, plus immediately after any fall or near-miss, and after any significant change in your loved one's condition. The emergency go bag specifically should be reviewed every three to six months.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            What brain activities work best for someone with early memory loss?
+        </div>
+        <div class="faq-answer">
+            <p>Activities with no "wrong answer" tend to work best, such as photo reminiscing, This or That questions, storytelling, sorting activities, drawing, and colouring. 
+
+<br><br>Jigsaw puzzles and card games also work well when the complexity is matched to their current level. The goal is engagement, not performance.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const questions = document.querySelectorAll('.faq-question');
+    
+    questions.forEach(question => {
+        question.addEventListener('click', function() {
+            const answer = this.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // Close all answers
+            document.querySelectorAll('.faq-answer').forEach(ans => {
+                ans.classList.remove('active');
+            });
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.classList.remove('active');
+            });
+            
+            // Open clicked answer if it wasn't active
+            if (!isActive) {
+                answer.classList.add('active');
+                this.classList.add('active');
+            }
+        });
+    });
+});
+</script>

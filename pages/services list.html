@@ -1,0 +1,67 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  .hc-type-outer { width: 100%; text-align: right; }
+  @media (max-width: 480px) {
+    .hc-type-outer { text-align: center; }
+    #hc-typed-word, #hc-cursor {
+      font-size: 14px !important;
+    }
+  }
+</style>
+
+<div class="hc-type-outer">
+    <div style="
+        background-color: #FFFFFF0D;
+        border: 1px solid #FFFFFF80;
+        border-radius: 44px;
+        padding: 8px 24px;
+        display: inline-block;
+    ">
+        <span id="hc-typed-word" style="font-size: 18px; font-weight: 500; font-family: 'Inter Tight', sans-serif; color: #FFFFFF; letter-spacing: -1px;"></span><span id="hc-cursor" style="font-size: 18px; font-weight: 500; font-family: 'Inter Tight', sans-serif; color: #f9f871;">|</span>
+    </div>
+</div>
+
+<script>
+  const hcWords = [
+    "Personal Care.",
+    "Safety Supervision.",
+    "Parkinson's Care.",
+    "Meal Assistance.",
+    "Medication Reminders",
+    "Companionship",
+    "Mobility Support."
+  ];
+
+  let hcWordIndex = 0;
+  let hcCharIndex = 0;
+  let hcIsDeleting = false;
+  const hcSpeed = 100;
+  const hcDelayBetweenWords = 1500;
+  const hcTypedWord = document.getElementById("hc-typed-word");
+  const hcCursor = document.getElementById("hc-cursor");
+
+  function hcType() {
+    const currentWord = hcWords[hcWordIndex];
+    if (hcIsDeleting) {
+      hcTypedWord.textContent = currentWord.substring(0, hcCharIndex--);
+    } else {
+      hcTypedWord.textContent = currentWord.substring(0, hcCharIndex++);
+    }
+
+    if (!hcIsDeleting && hcCharIndex === currentWord.length) {
+      setTimeout(() => hcIsDeleting = true, hcDelayBetweenWords);
+    } else if (hcIsDeleting && hcCharIndex === 0) {
+      hcIsDeleting = false;
+      hcWordIndex = (hcWordIndex + 1) % hcWords.length;
+    }
+
+    setTimeout(hcType, hcIsDeleting ? hcSpeed / 2 : hcSpeed);
+  }
+
+  setInterval(() => {
+    hcCursor.style.visibility = hcCursor.style.visibility === 'hidden' ? 'visible' : 'hidden';
+  }, 500);
+
+  hcType();
+</script>

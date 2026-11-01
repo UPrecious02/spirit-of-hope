@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .header { background: linear-gradient(135deg, #1a6b4a 0%, #2a9d6f 50%, #3dbf8a 100%); padding: 35px 30px; text-align: center; }
+    .header h1 { color: #ffffff; margin: 0 0 8px; font-size: 22px; }
+    .header p { color: rgba(255,255,255,0.85); margin: 0; font-size: 14px; }
+    .body { padding: 30px; }
+    .greeting { font-size: 16px; color: #333; margin-bottom: 16px; }
+    .intro { font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 24px; }
+    .results-box { background: #f0faf5; border-radius: 8px; padding: 24px; margin-bottom: 24px; border: 1px solid #b2dfcc; }
+    .results-box h2 { font-size: 16px; color: #1a6b4a; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .result-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #d4ede1; font-size: 14px; }
+    .result-row:last-child { border-bottom: none; }
+    .result-label { color: #555; font-weight: bold; }
+    .result-value { color: #1a6b4a; font-weight: bold; }
+    .risk-badge { display: inline-block; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: bold; background: linear-gradient(135deg, #2a9d6f, #3dbf8a); color: white; }
+    .next-steps { margin-bottom: 24px; }
+    .next-steps h2 { font-size: 16px; color: #1a6b4a; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .step { display: flex; align-items: flex-start; margin-bottom: 14px; }
+    .step-number { background: #2a9d6f; color: white; border-radius: 50%; width: 26px; height: 26px; text-align: center; line-height: 26px; font-size: 13px; font-weight: bold; flex-shrink: 0; margin-right: 12px; }
+    .step-text { font-size: 14px; color: #444; line-height: 1.6; }
+    .cta { text-align: center; margin: 30px 0 10px; }
+    .cta a { background: linear-gradient(135deg, #1a6b4a, #2a9d6f); color: white; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 15px; font-weight: bold; display: inline-block; }
+    .closing { font-size: 14px; color: #555; line-height: 1.7; margin-top: 24px; }
+    .footer { background: #f4f4f4; text-align: center; padding: 16px; font-size: 11px; color: #999; }
+
+    @media only screen and (max-width: 480px) {
+      .container { margin: 0; border-radius: 0; }
+      .header { padding: 24px 20px; }
+      .header h1 { font-size: 18px; }
+      .body { padding: 20px; }
+      .result-row { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <h1>🏠 Your Home Safety Assessment Results</h1>
+      <p>Thank you for taking the first step toward better care</p>
+    </div>
+
+    <div class="body">
+
+      <p class="greeting">Hi <strong>{{ event.name }}</strong>,</p>
+      <p class="intro">Thank you for completing the Spirit of Hope Home Safety Assessment. We've reviewed your responses and prepared a summary of your results along with recommended next steps to help you and your loved one get the right support.</p>
+
+      <!-- Results Box -->
+      <div class="results-box">
+        <h2>📊 Your Assessment Results</h2>
+        <div class="result-row">
+          <span class="result-label">Name</span>
+          <span class="result-value">{{ event.name }}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Relationship</span>
+          <span class="result-value">{{ event.relationship }}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Assessment Score</span>
+          <span class="result-value">{{ event.score }}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Risk Level</span>
+          <span class="result-value"><span class="risk-badge">{{ event.risk_level }}</span></span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Submitted On</span>
+          <span class="result-value">{{ event.submitted_date }}</span>
+        </div>
+      </div>
+
+      <!-- Next Steps -->
+      <div class="next-steps">
+        <h2>✅ Your Recommended Next Steps</h2>
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-text"><strong>Schedule a Free In-Home Consultation</strong> — One of our care specialists will visit your home, assess the environment in person, and recommend a tailored care plan.</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-text"><strong>Review Your Risk Level</strong> — Based on your score of {{ event.score }}, your loved one has been assessed as <strong>{{ event.risk_level }}</strong>. Our team is ready to help you understand what this means and what care options are available.</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-text"><strong>Reach Out With Any Questions</strong> — You don't have to navigate this alone. Our care coordinators are available to answer your questions and guide you through the process.</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta">
+        <a href="https://www.spiritofhopes.com/booking-calendar/in-home-consultation">Schedule Your Free Consultation</a>
+      </div>
+
+      <p class="closing">
+        We understand that caring for a loved one can be overwhelming, and we're here to make it easier. The Spirit of Hope team is committed to providing compassionate, professional care that gives your family peace of mind.<br><br>
+        Warm regards,<br>
+        <strong>The Spirit of Hope Team</strong>
+      </p>
+
+    </div>
+
+    <div class="footer">
+      Spirit of Hope Agency &mdash; Compassionate Care for Your Loved Ones<br>
+      <a href="https://www.spiritofhopes.com" style="color: #2a9d6f;">www.spiritofhopes.com</a>
+    </div>
+
+  </div>
+</body>
+</html>

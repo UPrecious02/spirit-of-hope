@@ -1,0 +1,169 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700&display=swap" rel="stylesheet">
+
+<div class="sv-wrap" id="sv-root">
+  <div class="sv-grid">
+    <div class="sv-item sv-open">
+      <button class="sv-head" type="button" id="sv-h1" aria-controls="sv-p1" aria-expanded="true">
+        <span class="sv-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg></span>
+        <span class="sv-name">Medication Management</span>
+        <svg class="sv-chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="sv-body" id="sv-p1" role="region" aria-labelledby="sv-h1"><div class="sv-body-in"><p class="sv-desc">Our nurses review medications with you, keep a clear schedule, and flag concerns so doses are never missed or mixed up.</p></div></div>
+    </div>
+    <div class="sv-item">
+      <button class="sv-head" type="button" id="sv-h2" aria-controls="sv-p2" aria-expanded="false">
+        <span class="sv-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></span>
+        <span class="sv-name">Diabetes Management</span>
+        <svg class="sv-chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="sv-body" id="sv-p2" role="region" aria-labelledby="sv-h2"><div class="sv-body-in"><p class="sv-desc">Support with blood sugar monitoring, food choices, and daily routines, with teaching that helps your loved one stay on track.</p></div></div>
+    </div>
+
+    <div class="sv-item">
+      <button class="sv-head" type="button" id="sv-h4" aria-controls="sv-p4" aria-expanded="false">
+        <span class="sv-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+        <span class="sv-name">Patient &amp; Family Education</span>
+        <svg class="sv-chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="sv-body" id="sv-p4" role="region" aria-labelledby="sv-h4"><div class="sv-body-in"><p class="sv-desc">Plain-language teaching so everyone understands the care plan, what to watch for, and when to call.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sv-wrap {
+    /* ── EDIT HERE ── */
+    --sv-ink: #14201E;           /* title + text */
+    --sv-green: #00544A;         /* chevron, focus ring */
+    --sv-yellow: #FFDA44;        /* icon tile */
+    --sv-line: #D3E0DC;          /* borders + dividers */
+    --sv-fill: #F4F8F6;          /* empty cell on desktop */
+    --sv-title: clamp(19px, 1.7vw, 23px);
+    --sv-text: clamp(14px, 1.35vw, 16px);
+    --sv-pad: 34px;
+    /* ── END ── */
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Inter Tight', sans-serif;
+    color: var(--sv-ink);
+  }
+  .sv-wrap *, .sv-wrap *::before, .sv-wrap *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .sv-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border: 1px solid var(--sv-line);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .sv-item, .sv-fill { border-right: 1px solid var(--sv-line); border-bottom: 1px solid var(--sv-line); }
+  .sv-item:nth-child(4n), .sv-fill { border-right: none; }
+  .sv-item, .sv-fill { border-bottom: none; }
+  .sv-fill { background: var(--sv-fill); }
+
+  .sv-head {
+    display: flex; flex-direction: column; align-items: flex-start;
+    width: 100%; padding: var(--sv-pad) var(--sv-pad) 0;
+    background: none; border: 0; text-align: left; cursor: default;
+    font: inherit; color: inherit;
+  }
+  .sv-icon {
+    width: 46px; height: 46px; border-radius: 13px; background: var(--sv-yellow);
+    display: flex; align-items: center; justify-content: center; flex: 0 0 auto;
+    margin-bottom: 22px;
+  }
+  .sv-icon svg { width: 21px; height: 21px; fill: none; stroke: var(--sv-ink); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .sv-name { font-weight: 700; font-size: var(--sv-title); line-height: 1.2; }
+  .sv-chev { display: none; }
+
+  .sv-body { display: grid; grid-template-rows: 1fr; }
+  .sv-body-in { overflow: hidden; min-height: 0; }
+  .sv-desc { padding: 14px var(--sv-pad) var(--sv-pad); font-weight: 400; font-size: var(--sv-text); line-height: 1.5; }
+
+  /* ── Tablet + mobile: tap-to-expand rows ── */
+  @media (max-width: 1040px) {
+    .sv-wrap { --sv-title: 17px; --sv-text: 15.5px; }
+    .sv-grid { grid-template-columns: 1fr; }
+    .sv-item, .sv-item:nth-child(4n), .sv-item:nth-child(n+5) { border-right: none; border-bottom: 1px solid var(--sv-line); }
+    .sv-item:nth-child(4) { border-bottom: none; }
+    .sv-fill { display: none; }
+
+    .sv-head {
+      flex-direction: row; align-items: center; gap: 14px;
+      padding: 14px 18px; min-height: 72px; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sv-head:focus-visible { outline: 3px solid var(--sv-green); outline-offset: -3px; border-radius: 12px; }
+    .sv-icon { width: 42px; height: 42px; border-radius: 12px; margin: 0; }
+    .sv-icon svg { width: 20px; height: 20px; }
+    .sv-name { flex: 1 1 auto; min-width: 0; }
+    .sv-chev {
+      display: block; flex: 0 0 auto; width: 24px; height: 24px;
+      fill: none; stroke: var(--sv-green); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
+      transition: transform .25s ease;
+    }
+    .sv-open .sv-chev { transform: rotate(180deg); }
+
+    .sv-body { grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .3s ease, visibility 0s linear .3s; }
+    .sv-open .sv-body { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .3s ease, visibility 0s; }
+    .sv-desc { padding: 0 18px 20px; line-height: 1.55; }
+  }
+  @media (max-width: 600px) {
+    .sv-wrap { --sv-text: 14px; }
+    .sv-grid { border-radius: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sv-body, .sv-chev { transition: none !important; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.getElementById('sv-root');
+    if (!root) return;
+    var items = [].slice.call(root.querySelectorAll('.sv-item'));
+    var mq = window.matchMedia('(max-width: 1040px)');
+
+    function report() {
+      try {
+        window.parent.postMessage({ type: 'svcHeight', height: Math.ceil(root.getBoundingClientRect().height) }, '*');
+      } catch (e) {}
+    }
+    function sync() {
+      items.forEach(function (it) {
+        var b = it.querySelector('.sv-head');
+        if (!b) return;
+        if (mq.matches) {
+          b.removeAttribute('tabindex');
+          b.setAttribute('aria-expanded', it.classList.contains('sv-open') ? 'true' : 'false');
+        } else {
+          b.setAttribute('tabindex', '-1');
+          b.setAttribute('aria-expanded', 'true');
+        }
+      });
+      report();
+    }
+    items.forEach(function (it) {
+      var b = it.querySelector('.sv-head');
+      if (!b) return;
+      b.addEventListener('click', function () {
+        if (!mq.matches) return;
+        var wasOpen = it.classList.contains('sv-open');
+        items.forEach(function (o) {
+          o.classList.remove('sv-open');
+          var ob = o.querySelector('.sv-head');
+          if (ob) ob.setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          it.classList.add('sv-open');
+          b.setAttribute('aria-expanded', 'true');
+        }
+        setTimeout(report, 340);
+      });
+    });
+    if (mq.addEventListener) mq.addEventListener('change', sync); else if (mq.addListener) mq.addListener(sync);
+    window.addEventListener('resize', report);
+    window.addEventListener('load', sync);
+    sync();
+  })();
+</script>

@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter Tight', sans-serif;
+            background: transparent;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Hide/Show sections */
+        .hidden {
+            display: none !important;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ========== ASSESSMENT SECTION STYLES ========== */
+        
+        #assessmentSection {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        #progressBar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        #progressFill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #2A7C6F, #1f5d54);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+        
+        #progressText {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .section-label {
+            font-size: 12px;
+            color: #2A7C6F;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .question-title {
+            font-size: 26px;
+            color: #000000;
+            margin-bottom: 10px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .question-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Inter Tight', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus {
+            outline: none;
+            border-color: #2A7C6F;
+        }
+        
+        .option-label {
+            display: block;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            background: white;
+        }
+        
+        .option-label:hover {
+            border-color: #2A7C6F;
+            background: #e8f5f3;
+        }
+        
+        .option-label input[type="radio"],
+        .option-label input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .option-label.selected {
+            border-color: #2A7C6F;
+            background: #d4ede9;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 15px;
+        }
+        
+        button {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Inter Tight', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        #prevBtn {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        #prevBtn:hover {
+            background: #e0e0e0;
+        }
+        
+        #nextBtn {
+            background: #2A7C6F;
+            color: white;
+            margin-left: auto;
+        }
+        
+        #nextBtn:hover {
+            background: #1f5d54;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(42, 124, 111, 0.3);
+        }
+        
+        /* ========== RESULTS SECTION STYLES ========== */
+        
+        #resultsSection {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            color: #000000;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .risk-badge {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .risk-low {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: white;
+        }
+        
+        .risk-moderate {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+        }
+        
+        .risk-high {
+            background: linear-gradient(135deg, #fb923c, #f97316);
+            color: white;
+        }
+        
+        .risk-critical {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+            color: white;
+        }
+        
+        .score-display {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .score-number {
+            font-size: 72px;
+            font-weight: 700;
+            color: #2A7C6F;
+            line-height: 1;
+        }
+        
+        .score-label {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .section h2 {
+            font-size: 24px;
+            color: #000000;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .section p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #000000;
+            margin-bottom: 12px;
+        }
+        
+        .concern-item {
+            padding: 15px;
+            background: #e8f5f3;
+            border-left: 4px solid #2A7C6F;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+        
+        .concern-item h3 {
+            font-size: 16px;
+            color: #000000;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .concern-item p {
+            font-size: 14px;
+            color: #333;
+            margin: 0;
+        }
+        
+        .care-plan-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+        
+        .care-plan-item::before {
+            content: "✓";
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #2A7C6F;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+        
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: #2A7C6F;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 40px;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background: #1f5d54;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 124, 111, 0.3);
+        }
+        
+        .email-note {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f5f3;
+            border-radius: 8px;
+        }
+        
+        .email-note p {
+            color: #2A7C6F;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        @media (max-width: 600px) {
+            .question-title {
+                font-size: 22px;
+            }
+            
+            .option-label {
+                padding: 12px 15px;
+                font-size: 15px;
+            }
+            
+            button {
+                padding: 12px 25px;
+                font-size: 15px;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .score-number {
+                font-size: 56px;
+            }
+            
+            .risk-badge {
+                font-size: 20px;
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- ========== ASSESSMENT SECTION ========== -->
+        <div id="assessmentSection">
+            <div id="progressBar">
+                <div id="progressFill"></div>
+            </div>
+            
+            <div id="progressText">
+                Question <span id="currentQuestion">1</span> of <span id="totalQuestions">19</span>
+            </div>
+            
+            <div id="questionContainer" class="fade-in"></div>
+            
+            <div class="button-container">
+                <button id="prevBtn" style="display: none;">Previous</button>
+                <button id="nextBtn">Next</button>
+            </div>
+        </div>
+        
+        <!-- ========== RESULTS SECTION ========== -->
+        <div id="resultsSection" class="hidden">
+            <div class="header">
+                <h1>Your Home Safety Assessment Results</h1>
+                <p>Based on your responses, here's what we found</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <div id="riskBadge" class="risk-badge"></div>
+            </div>
+            
+            <div class="score-display">
+                <div class="score-number" id="scoreNumber">--</div>
+                <div class="score-label">Total Assessment Score</div>
+            </div>
+            
+            <div class="section">
+                <h2>📊 What This Means</h2>
+                <p id="summaryText"></p>
+            </div>
+            
+            <div class="section">
+                <h2>⚠️ Top Areas of Concern</h2>
+                <div id="concernsList"></div>
+            </div>
+            
+            <div class="section">
+                <h2>💡 Recommended Care Plan</h2>
+                <div id="carePlan"></div>
+            </div>
+            
+            <a href="/booking-calendar/in-home-consultation" class="cta-button">
+                Schedule Your Free In-Home Consultation
+            </a>
+            
+            <div class="email-note">
+                <p>📧 A detailed copy of these results has been sent to <span id="userEmail"></span></p>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Assessment Questions Data
+        const questions = [
+            {
+                id: 1,
+                section: "Basic Information",
+                question: "What's your name?",
+                type: "text",
+                required: true,
+                points: 0
+            },
+            {
+                id: 2,
+                section: "Basic Information",
+                question: "What's your email address?",
+                subtitle: "We'll send your personalized results here",
+                type: "email",
+                required: true,
+                points: 0
+            },
+            {
+                id: 3,
+                section: "Basic Information",
+                question: "What's your phone number?",
+                type: "tel",
+                required: true,
+                points: 0
+            },
+            {
+                id: 4,
+                section: "Basic Information",
+                question: "What is your relationship to the person you're caring for?",
+                type: "radio",
+                options: [
+                    { text: "Spouse/Partner", value: 0 },
+                    { text: "Adult Child", value: 0 },
+                    { text: "Other Family Member", value: 0 },
+                    { text: "Friend/Neighbor", value: 0 },
+                    { text: "Professional Caregiver", value: 0 }
+                ],
+                required: true
+            },
+            {
+                id: 5,
+                section: "House (Home Safety)",
+                question: "Has your loved one experienced any falls in the past 6 months?",
+                type: "radio",
+                options: [
+                    { text: "No falls", value: 0 },
+                    { text: "1 fall", value: 3 },
+                    { text: "2-3 falls", value: 6 },
+                    { text: "4+ falls", value: 10 }
+                ],
+                required: true
+            },
+            {
+                id: 6,
+                section: "House (Home Safety)",
+                question: "Do they have difficulty with stairs or uneven surfaces?",
+                type: "radio",
+                options: [
+                    { text: "No difficulty", value: 0 },
+                    { text: "Occasionally needs support", value: 3 },
+                    { text: "Frequently struggles", value: 7 },
+                    { text: "Avoids stairs entirely", value: 10 }
+                ],
+                required: true
+            },
+            {
+                id: 7,
+                section: "House (Home Safety)",
+                question: "Are there safety hazards in their home?",
+                subtitle: "Select all that apply",
+                type: "checkbox",
+                options: [
+                    { text: "Poor lighting", value: 2 },
+                    { text: "Loose rugs/carpets", value: 2 },
+                    { text: "Clutter/obstacles", value: 2 },
+                    { text: "No grab bars in bathroom", value: 3 },
+                    { text: "Slippery floors", value: 2 },
+                    { text: "None of the above", value: 0 }
+                ],
+                required: true
+            },
+            {
+                id: 8,
+                section: "House (Home Safety)",
+                question: "Can they safely navigate their home independently?",
+                type: "radio",
+                options: [
+                    { text: "Yes, completely independent", value: 0 },
+                    { text: "Mostly, with minor concerns", value: 3 },
+                    { text: "Needs occasional assistance", value: 6 },
+                    { text: "Requires constant supervision", value: 10 }
+                ],
+                required: true
+            },
+            {
+                id: 9,
+                section: "Health (Physical & Daily Living)",
+                question: "Do they need help with bathing, dressing, or grooming?",
+                type: "radio",
+                options: [
+                    { text: "No help needed", value: 0 },
+                    { text: "Needs reminders only", value: 2 },
+                    { text: "Needs partial assistance", value: 5 },
+                    { text: "Needs full assistance", value: 8 }
+                ],
+                required: true
+            },
+            {
+                id: 10,
+                section: "Health (Physical & Daily Living)",
+                question: "How well do they manage their medications?",
+                type: "radio",
+                options: [
+                    { text: "Takes medications independently and correctly", value: 0 },
+                    { text: "Occasionally forgets doses", value: 4 },
+                    { text: "Frequently misses or doubles doses", value: 7 },
+                    { text: "Cannot manage medications at all", value: 10 }
+                ],
+                required: true
+            },
+            {
+                id: 11,
+                section: "Health (Physical & Daily Living)",
+                question: "Have they experienced unexplained weight loss or changes in appetite?",
+                type: "radio",
+                options: [
+                    { text: "No changes", value: 0 },
+                    { text: "Slight changes, not concerning", value: 2 },
+                    { text: "Noticeable weight loss", value: 5 },
+                    { text: "Significant weight loss", value: 8 }
+                ],
+                required: true
+            },
+            {
+                id: 12,
+                section: "Health (Physical & Daily Living)",
+                question: "Do they have difficulty preparing meals?",
+                type: "radio",
+                options: [
+                    { text: "Prepares meals independently", value: 0 },
+                    { text: "Needs occasional help", value: 3 },
+                    { text: "Requires frequent assistance", value: 6 },
+                    { text: "Cannot prepare meals safely", value: 9 }
+                ],
+                required: true
+            },
+            {
+                id: 13,
+                section: "Heart (Cognitive & Emotional)",
+                question: "Do they forget recent conversations or appointments?",
+                type: "radio",
+                options: [
+                    { text: "Rarely/Never", value: 0 },
+                    { text: "Occasionally", value: 3 },
+                    { text: "Frequently", value: 6 },
+                    { text: "Very often/Daily", value: 10 }
+                ],
+                required: true
+            },
+            {
+                id: 14,
+                section: "Heart (Cognitive & Emotional)",
+                question: "Have they gotten lost in familiar places?",
+                type: "radio",
+                options: [
+                    { text: "No", value: 0 },
+                    { text: "Once or twice", value: 5 },
+                    { text: "Several times", value: 8 },
+                    { text: "Yes, frequently", value: 10 }
+                ],
+                required: true
+            },
+            {
+                id: 15,
+                section: "Heart (Cognitive & Emotional)",
+                question: "Do they seem confused about time, date, or place?",
+                type: "radio",
+                options: [
+                    { text: "No confusion", value: 0 },
+                    { text: "Occasional confusion", value: 4 },
+                    { text: "Frequent confusion", value: 7 },
+                    { text: "Constant confusion", value: 10 }
+                ],
+                required: true
+            },
+            {
+                id: 16,
+                section: "Heart (Cognitive & Emotional)",
+                question: "Have they withdrawn from social activities or hobbies they used to enjoy?",
+                type: "radio",
+                options: [
+                    { text: "No, still active", value: 0 },
+                    { text: "Slightly less active", value: 3 },
+                    { text: "Noticeably withdrawn", value: 6 },
+                    { text: "Completely isolated", value: 9 }
+                ],
+                required: true
+            },
+            {
+                id: 17,
+                section: "Caregiver Burden",
+                question: "How many hours per week do you provide care?",
+                type: "radio",
+                options: [
+                    { text: "0-5 hours", value: 0 },
+                    { text: "6-15 hours", value: 2 },
+                    { text: "16-30 hours", value: 5 },
+                    { text: "30+ hours", value: 8 }
+                ],
+                required: true
+            },
+            {
+                id: 18,
+                section: "Caregiver Burden",
+                question: "How would you describe your stress level as a caregiver?",
+                type: "radio",
+                options: [
+                    { text: "Managing well", value: 0 },
+                    { text: "Occasionally stressed", value: 3 },
+                    { text: "Frequently overwhelmed", value: 6 },
+                    { text: "Completely burned out", value: 10 }
+                ],
+                required: true
+            },
+            {
+                id: 19,
+                section: "Caregiver Burden",
+                question: "Has caregiving affected your own health or wellbeing?",
+                type: "radio",
+                options: [
+                    { text: "No impact", value: 0 },
+                    { text: "Minor impact", value: 3 },
+                    { text: "Significant impact", value: 6 },
+                    { text: "Severe impact - I'm struggling", value: 9 }
+                ],
+                required: true
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let answers = {};
+        let totalScore = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('totalQuestions').textContent = questions.length;
+            renderQuestion(currentQuestionIndex);
+            
+            document.getElementById('nextBtn').addEventListener('click', handleNext);
+            document.getElementById('prevBtn').addEventListener('click', handlePrevious);
+        });
+
+        function renderQuestion(index) {
+            const question = questions[index];
+            const container = document.getElementById('questionContainer');
+            
+            let html = `
+                <div style="margin-bottom: 20px;">
+                    <p class="section-label">${question.section}</p>
+                    <h2 class="question-title">${question.question}</h2>
+                    ${question.subtitle ? `<p class="question-subtitle">${question.subtitle}</p>` : ''}
+                </div>
+            `;
+            
+            if (question.type === 'text' || question.type === 'email' || question.type === 'tel') {
+                const savedAnswer = answers[question.id] ? answers[question.id].answer : '';
+                html += `<input type="${question.type}" id="answer_${question.id}" value="${savedAnswer}" ${question.required ? 'required' : ''}>`;
+            } else if (question.type === 'radio') {
+                question.options.forEach((option, i) => {
+                    const savedAnswer = answers[question.id] ? answers[question.id].answer : null;
+                    const isChecked = savedAnswer === option.text ? 'checked' : '';
+                    html += `
+                        <label class="option-label ${isChecked ? 'selected' : ''}">
+                            <input type="radio" name="answer_${question.id}" value="${option.value}" data-text="${option.text}" ${isChecked}>
+                            ${option.text}
+                        </label>
+                    `;
+                });
+            } else if (question.type === 'checkbox') {
+                question.options.forEach((option, i) => {
+                    const savedAnswers = answers[question.id] ? answers[question.id].answer : [];
+                    const isChecked = savedAnswers.includes(option.text) ? 'checked' : '';
+                    html += `
+                        <label class="option-label ${isChecked ? 'selected' : ''}">
+                            <input type="checkbox" name="answer_${question.id}" value="${option.value}" data-text="${option.text}" ${isChecked}>
+                            ${option.text}
+                        </label>
+                    `;
+                });
+            }
+            
+            container.innerHTML = html;
+            container.classList.add('fade-in');
+            
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.addEventListener('click', function() {
+                    const input = this.querySelector('input');
+                    if (input.type === 'radio') {
+                        document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+                        this.classList.add('selected');
+                    } else if (input.type === 'checkbox') {
+                        this.classList.toggle('selected');
+                    }
+                });
+            });
+            
+            document.getElementById('currentQuestion').textContent = index + 1;
+            const progress = ((index + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            document.getElementById('prevBtn').style.display = index > 0 ? 'block' : 'none';
+            document.getElementById('nextBtn').textContent = index === questions.length - 1 ? 'See Results' : 'Next';
+        }
+
+        function handleNext() {
+            const question = questions[currentQuestionIndex];
+            let answer = null;
+            let score = 0;
+            
+            if (question.type === 'text' || question.type === 'email' || question.type === 'tel') {
+                const input = document.getElementById(`answer_${question.id}`);
+                answer = input.value.trim();
+                if (question.required && !answer) {
+                    alert('Please answer this question');
+                    return;
+                }
+            } else if (question.type === 'radio') {
+                const selected = document.querySelector(`input[name="answer_${question.id}"]:checked`);
+                if (!selected && question.required) {
+                    alert('Please select an option');
+                    return;
+                }
+                if (selected) {
+                    answer = selected.getAttribute('data-text');
+                    score = parseInt(selected.value);
+                }
+            } else if (question.type === 'checkbox') {
+                const selected = document.querySelectorAll(`input[name="answer_${question.id}"]:checked`);
+                if (selected.length === 0 && question.required) {
+                    alert('Please select at least one option');
+                    return;
+                }
+                answer = [];
+                selected.forEach(checkbox => {
+                    answer.push(checkbox.getAttribute('data-text'));
+                    score += parseInt(checkbox.value);
+                });
+            }
+            
+            if (answers[question.id]) {
+                totalScore -= answers[question.id].score;
+            }
+            
+            answers[question.id] = {
+                question: question.question,
+                answer: answer,
+                score: score
+            };
+            
+            totalScore += score;
+            
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion(currentQuestionIndex);
+            } else {
+                showResults();
+            }
+        }
+
+        function handlePrevious() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion(currentQuestionIndex);
+            }
+        }
+
+        function showResults() {
+            // Hide assessment, show results
+            document.getElementById('assessmentSection').classList.add('hidden');
+            document.getElementById('resultsSection').classList.remove('hidden');
+            document.getElementById('resultsSection').classList.add('fade-in');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Get user data
+            const userEmail = answers[2] ? answers[2].answer : '';
+            const userName = answers[1] ? answers[1].answer : '';
+            const userPhone = answers[3] ? answers[3].answer : '';
+            const relationship = answers[4] ? answers[4].answer : '';
+            
+            // Determine risk level
+            let riskLevel = '';
+            if (totalScore <= 35) {
+                riskLevel = 'Low Risk';
+            } else if (totalScore <= 70) {
+                riskLevel = 'Moderate Risk';
+            } else if (totalScore <= 110) {
+                riskLevel = 'High Risk';
+            } else {
+                riskLevel = 'Critical Risk';
+            }
+            
+            // Display score
+            document.getElementById('scoreNumber').textContent = totalScore;
+            document.getElementById('userEmail').textContent = userEmail;
+            
+            // Update risk badge
+            const badge = document.getElementById('riskBadge');
+            let riskClass = '';
+            let summaryText = '';
+            let careHours = '';
+            let carePlanItems = [];
+            
+            if (totalScore <= 35) {
+                badge.textContent = "LOW RISK 💚";
+                riskClass = "risk-low";
+                summaryText = "Your loved one is relatively independent and managing well at home. While there are no immediate safety concerns, periodic monitoring and preventive measures are recommended to maintain their independence.";
+                careHours = "0-5 hours per week of companion care";
+                carePlanItems = [
+                    "Weekly check-in calls to monitor wellbeing",
+                    "Monthly home safety evaluations",
+                    "Companion care for social engagement and activities",
+                    "Emergency response system setup",
+                    "Meal planning assistance if needed"
+                ];
+            } else if (totalScore <= 70) {
+                badge.textContent = "MODERATE RISK 💛";
+                riskClass = "risk-moderate";
+                summaryText = "Your loved one needs some assistance with daily activities and safety measures. Professional part-time care can help maintain their independence while ensuring safety and wellbeing. Early intervention now can prevent more serious issues later.";
+                careHours = "10-20 hours per week of personal and companion care";
+                carePlanItems = [
+                    "Personal care assistance (bathing, grooming, dressing)",
+                    "Medication management and reminders",
+                    "Meal preparation and nutrition monitoring",
+                    "Light housekeeping and home safety improvements",
+                    "Transportation to appointments and social activities",
+                    "Regular communication with family members"
+                ];
+            } else if (totalScore <= 110) {
+                badge.textContent = "HIGH RISK 🧡";
+                riskClass = "risk-high";
+                summaryText = "Your loved one has significant care needs that require regular professional support. Without proper care, their safety and health may be at risk. We strongly recommend implementing a comprehensive care plan as soon as possible.";
+                careHours = "20-40 hours per week of comprehensive care";
+                carePlanItems = [
+                    "Daily personal care and hygiene assistance",
+                    "Medication management with documentation",
+                    "Full meal preparation and feeding assistance if needed",
+                    "Fall prevention and mobility support",
+                    "Cognitive stimulation activities",
+                    "24/7 emergency response system",
+                    "Coordination with healthcare providers",
+                    "Caregiver respite services for family"
+                ];
+            } else {
+                badge.textContent = "CRITICAL RISK ❤️";
+                riskClass = "risk-critical";
+                summaryText = "Your loved one requires immediate attention and comprehensive care. There are urgent safety concerns that need to be addressed right away. We recommend contacting us immediately for an emergency consultation to develop a full-time care plan.";
+                careHours = "40+ hours per week or 24/7 live-in care";
+                carePlanItems = [
+                    "Full-time or live-in professional caregiving",
+                    "Complete assistance with all daily living activities",
+                    "Round-the-clock safety monitoring",
+                    "Advanced medication management",
+                    "Specialized dementia or memory care if needed",
+                    "Immediate home safety modifications",
+                    "Coordination with medical team and specialists",
+                    "Emergency care plan and family support"
+                ];
+            }
+            
+            badge.className = `risk-badge ${riskClass}`;
+            
+            // Update summary
+            document.getElementById('summaryText').innerHTML = summaryText + `<br><br><strong>Recommended Care Level:</strong> ${careHours}`;
+            
+            // Build care plan
+            const carePlanDiv = document.getElementById('carePlan');
+            carePlanDiv.innerHTML = '';
+            carePlanItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'care-plan-item';
+                div.textContent = item;
+                carePlanDiv.appendChild(div);
+            });
+            
+            // Top concerns
+            const concernsList = document.getElementById('concernsList');
+            concernsList.innerHTML = '';
+            const mockConcerns = [
+                { title: "Fall Risk", description: "Multiple falls reported in the past 6 months" },
+                { title: "Medication Management", description: "Difficulty managing medications independently" },
+                { title: "Home Safety Hazards", description: "Several environmental hazards identified" }
+            ];
+            
+            mockConcerns.forEach(concern => {
+                const div = document.createElement('div');
+                div.className = 'concern-item';
+                div.innerHTML = `
+                    <h3>${concern.title}</h3>
+                    <p>${concern.description}</p>
+                `;
+                concernsList.appendChild(div);
+            });
+            
+          // Save to database via postMessage
+            try {
+                window.parent.postMessage({
+                    type: 'saveAssessment',
+                    data: {
+                        name: userName,
+                        email: userEmail,
+                        phone: userPhone,
+                        relationship: relationship,
+                        score: totalScore,
+                        riskLevel: riskLevel,
+                        answers: JSON.stringify(answers),
+                        submittedDate: new Date().toISOString()
+                    }
+                }, '*');
+                console.log('✅ Data sent to parent');
+            } catch (error) {
+                console.error('❌ Error sending data:', error);
+            }
+        }
+    </script>
+</body>
+</html>

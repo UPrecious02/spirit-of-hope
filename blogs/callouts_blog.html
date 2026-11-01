@@ -1,0 +1,148 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<div style="
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+">
+    <!-- Blue wave effect overlay -->
+    <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+            radial-gradient(circle at 40% 20%, rgba(255,255,255,0.05) 0%, transparent 40%);
+        pointer-events: none;
+    "></div>
+
+    <h3 style="
+        font-family: 'Inter Tight', sans-serif;
+        font-size: clamp(16px, 3vw, 22px);
+        color: #ffffff;
+        font-weight: 700;
+        margin: 0 0 30px;
+        position: relative;
+        z-index: 1;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    ">🕐 Best Times to Give Medication</h3>
+
+    <!-- Cards Grid -->
+    <div style="
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        max-width: 720px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    ">
+
+        <!-- Morning -->
+        <div style="
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            backdrop-filter: blur(4px);
+        ">
+            <div style="font-size: 28px; margin-bottom: 8px;">☀️</div>
+            <div style="
+                font-family: 'Inter Tight', sans-serif;
+                font-size: 15px;
+                font-weight: 700;
+                color: #ffffff;
+                margin-bottom: 8px;
+            ">Morning</div>
+            <div style="
+                font-family: 'Inter Tight', sans-serif;
+                font-size: 13px;
+                color: rgba(255,255,255,0.85);
+                line-height: 1.6;
+            ">Best time: after breakfast. Many medications require food. Anchor to the morning meal to build a habit.</div>
+        </div>
+
+        <!-- Midday -->
+        <div style="
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            backdrop-filter: blur(4px);
+        ">
+            <div style="font-size: 28px; margin-bottom: 8px;">🌤️</div>
+            <div style="
+                font-family: 'Inter Tight', sans-serif;
+                font-size: 15px;
+                font-weight: 700;
+                color: #ffffff;
+                margin-bottom: 8px;
+            ">Midday</div>
+            <div style="
+                font-family: 'Inter Tight', sans-serif;
+                font-size: 13px;
+                color: rgba(255,255,255,0.85);
+                line-height: 1.6;
+            ">Anchor to lunch. Set a phone alarm. This is the most commonly missed dose — an alert is not optional.</div>
+        </div>
+
+        <!-- Evening -->
+        <div style="
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            backdrop-filter: blur(4px);
+        ">
+            <div style="font-size: 28px; margin-bottom: 8px;">🌙</div>
+            <div style="
+                font-family: 'Inter Tight', sans-serif;
+                font-size: 15px;
+                font-weight: 700;
+                color: #ffffff;
+                margin-bottom: 8px;
+            ">Evening</div>
+            <div style="
+                font-family: 'Inter Tight', sans-serif;
+                font-size: 13px;
+                color: rgba(255,255,255,0.85);
+                line-height: 1.6;
+            ">After dinner. Keep evening medications separate from morning ones to prevent confusion on difficult days.</div>
+        </div>
+
+        <!-- Bedtime -->
+        <div style="
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            backdrop-filter: blur(4px);
+        ">
+            <div style="font-size: 28px; margin-bottom: 8px;">😴</div>
+            <div style="
+                font-family: 'Inter Tight', sans-serif;
+                font-size: 15px;
+                font-weight: 700;
+                color: #ffffff;
+                margin-bottom: 8px;
+            ">Bedtime</div>
+            <div style="
+                font-family: 'Inter Tight', sans-serif;
+                font-size: 13px;
+                color: rgba(255,255,255,0.85);
+                line-height: 1.6;
+            ">Bedtime medications include many sleep aids and certain heart medications. Never take with alcohol.</div>
+        </div>
+
+    </div>
+</div>

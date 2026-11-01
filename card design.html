@@ -1,0 +1,128 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  .hiw-stack {
+    width: 100%;
+    margin: 0 auto;
+    font-family: 'Inter Tight', sans-serif;
+    letter-spacing: -0.03em;
+    position: relative;
+  }
+
+  .hiw-card {
+    border-radius: 24px;
+    padding: 36px 32px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    margin-bottom: -60px;
+    position: relative;
+  }
+
+  .hiw-card:last-child { margin-bottom: 0; }
+
+  .hiw-card.active { z-index: 10; }
+
+  .hiw-card.collapsed { padding: 24px 32px; }
+
+  .hiw-step {
+    font-size: clamp(11px, 1.5vw, 13px);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+
+  .hiw-title {
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0;
+    letter-spacing: -0.03em;
+  }
+
+  .hiw-body {
+    font-size: clamp(15px, 2vw, 17px);
+    line-height: 1.75;
+    margin: 0;
+    max-width: 600px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease;
+    margin-top: 0;
+  }
+
+  .hiw-card.active .hiw-body {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 32px;
+  }
+
+  .hiw-card-1 { background-color: #52FFEA; color: #0a1f1c; z-index: 4; }
+  .hiw-card-1 .hiw-step { color: #007063; }
+
+  .hiw-card-2 { background-color: #00B8A2; color: #0a1f1c; z-index: 3; }
+  .hiw-card-2 .hiw-step { color: #00544A; }
+
+  .hiw-card-3 { background-color: #007063; color: #ffffff; z-index: 2; }
+  .hiw-card-3 .hiw-step { color: rgba(255,255,255,0.7); }
+
+  .hiw-card-4 { background-color: #00544A; color: #ffffff; z-index: 1; margin-bottom: 0; }
+  .hiw-card-4 .hiw-step { color: rgba(255,255,255,0.7); }
+
+  @media (max-width: 480px) {
+    .hiw-card { padding: 26px 20px; margin-bottom: -50px; border-radius: 18px; }
+    .hiw-card.collapsed { padding: 14px 20px; }
+  }
+</style>
+
+<div class="hiw-stack">
+
+  <div class="hiw-card hiw-card-1" onclick="toggleCard(this)">
+    <p class="hiw-step">Step 01</p>
+    <h3 class="hiw-title">Call and tell us what's going on</h3>
+    <p class="hiw-body">No forms to fill out first. Talk to a real Care Advisor about your loved one's needs, schedule, and personality — usually in under 10 minutes.</p>
+  </div>
+
+  <div class="hiw-card hiw-card-2" onclick="toggleCard(this)">
+    <p class="hiw-step">Step 02</p>
+    <h3 class="hiw-title">Free in-home visit from an RN</h3>
+    <p class="hiw-body">A Registered Nurse visits your home, assesses the situation firsthand, and builds a care plan specific to your loved one — not a generic package.</p>
+  </div>
+
+  <div class="hiw-card hiw-card-3" onclick="toggleCard(this)">
+    <p class="hiw-step">Step 03</p>
+    <h3 class="hiw-title">We match you with the right caregiver</h3>
+    <p class="hiw-body">We pair your loved one with a caregiver chosen for skill, availability, and personality fit — not just whoever's free that day.</p>
+  </div>
+
+  <div class="hiw-card hiw-card-4" onclick="toggleCard(this)">
+    <p class="hiw-step">Step 04</p>
+    <h3 class="hiw-title">Ongoing check-ins, not radio silence</h3>
+    <p class="hiw-body">We stay involved after care starts: regular check-ins, quick answers to questions, and adjustments the moment something's not working.</p>
+  </div>
+
+</div>
+
+<script>
+  const allCards = document.querySelectorAll('.hiw-card');
+
+  function toggleCard(card) {
+    allCards.forEach(c => {
+      if (c === card) {
+        c.classList.add('active');
+        c.classList.remove('collapsed');
+      } else {
+        c.classList.remove('active');
+        c.classList.add('collapsed');
+      }
+    });
+  }
+
+  // Open first card by default
+  allCards.forEach(c => c.classList.add('collapsed'));
+  allCards[0].classList.remove('collapsed');
+  allCards[0].classList.add('active');
+</script>
